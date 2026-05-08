@@ -7,8 +7,8 @@ import jakarta.persistence.Id;
 
 @Entity
 public class UrlMapping {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id // primary key annotation
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // annotation for generating id with the auto increment/identity feature
     private Long id;
 
     private String longUrl;
