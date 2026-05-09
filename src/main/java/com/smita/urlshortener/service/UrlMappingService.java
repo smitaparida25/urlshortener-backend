@@ -14,7 +14,8 @@ public class UrlMappingService {
         UrlMapping mapping = new UrlMapping();
 
         // create getter and setter in urlMapping to access and edit the fields
-
+        mapping.setLongUrl(url);
+        mapping.setShortCode("abcd");
 
         urlMappingRepository.save(mapping);
         return "abcd";
