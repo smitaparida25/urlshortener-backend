@@ -15,6 +15,7 @@ public class UrlMappingService {
 
         // create getter and setter in urlMapping to access and edit the fields
 
+
         urlMappingRepository.save(mapping);
         return "abcd";
     }

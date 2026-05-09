@@ -14,7 +14,7 @@ public class UrlMappingController {
 
     @PostMapping("/shorten") // string needs quotes
     public String shortenUrl(@RequestParam String url){ // take string parameter from url
-        //
+
     }
 
 
