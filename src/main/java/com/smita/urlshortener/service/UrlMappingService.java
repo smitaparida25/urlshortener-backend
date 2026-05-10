@@ -11,13 +11,27 @@ public class UrlMappingService {
     }
 
     public String shortenUrl(String url){
-        UrlMapping mapping = new UrlMapping();
-
-        // create getter and setter in urlMapping to access and edit the fields
+        UrlMapping mapping = new UrlMapping(); // object
+        // save long url first.
         mapping.setLongUrl(url);
-        mapping.setShortCode("abcd");
-
         urlMappingRepository.save(mapping);
-        return "abcd";
+
+        Long id = mapping.getId();
+        String shortCode = encodeBase62(id);
+        mapping.setShortCode(shortCode);
+        urlMappingRepository.save(mapping);
+
+        return shortCode;
+    }
+    public static final String BASE62 = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    public String encodeBase62(Long id){
+        StringBuilder shortCode = new StringBuilder();
+
+        while(id>0){
+            int remainder = (int) (id%62);
+            shortCode.append(BASE62.charAt(remainder));
+            id = id / 62;
+        }
+        return shortCode.reverse().toString();
     }
 }
