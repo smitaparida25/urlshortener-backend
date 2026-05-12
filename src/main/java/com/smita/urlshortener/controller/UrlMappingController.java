@@ -1,6 +1,8 @@
 package com.smita.urlshortener.controller;
 
 import com.smita.urlshortener.service.UrlMappingService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,12 +15,17 @@ public class UrlMappingController {
 
     @PostMapping("/shorten") // string needs quotes
     public String shortenUrl(@RequestBody String url){ // take string parameter from url
-        return urlMappingService.shortenUrl(url);
+        return "http://localhost:8080/" + urlMappingService.shortenUrl(url);
     }
 
     @GetMapping("/{shortCode}")
-    public String getOriginalUrl(@PathVariable String shortCode){
-        return urlMappingService.getOriginalUrl(shortCode);
+    public ResponseEntity<Void> redirect(@PathVariable String shortCode) {
+        String url = urlMappingService.getOriginalUrl(shortCode);
+
+        return ResponseEntity
+                .status(302)
+                .header("Location", url)
+                .build();
     }
 
 }

@@ -35,7 +35,7 @@ public class UrlMappingService {
         return shortCode.reverse().toString();
     }
 
-    public String getOriginalUrl(String shortCode){
+    public String getOriginalUrl(String shortCode) {
         UrlMapping current = urlMappingRepository.findByShortCode(shortCode);
         return current.getLongUrl();
     }
