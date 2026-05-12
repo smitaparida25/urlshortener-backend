@@ -17,6 +17,8 @@ public class UrlMappingController {
     }
 
     @GetMapping("/{shortCode}")
-    public String
+    public String getOriginalUrl(@PathVariable String shortCode){
+        return urlMappingService.getOriginalUrl(shortCode);
+    }
 
 }
