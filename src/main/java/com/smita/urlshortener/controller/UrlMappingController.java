@@ -1,11 +1,10 @@
 package com.smita.urlshortener.controller;
 
 import com.smita.urlshortener.service.UrlMappingService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 public class UrlMappingController {
     private final UrlMappingService urlMappingService; // injecting service
     public UrlMappingController(UrlMappingService urlMappingService){
@@ -13,9 +12,8 @@ public class UrlMappingController {
     }
 
     @PostMapping("/shorten") // string needs quotes
-    public String shortenUrl(@RequestParam String url){ // take string parameter from url
+    public String shortenUrl(@RequestBody String url){ // take string parameter from url
         return urlMappingService.shortenUrl(url);
     }
-
 
 }
