@@ -16,4 +16,7 @@ public class UrlMappingController {
         return urlMappingService.shortenUrl(url);
     }
 
+    @GetMapping("/{shortCode}")
+    public String
+
 }
