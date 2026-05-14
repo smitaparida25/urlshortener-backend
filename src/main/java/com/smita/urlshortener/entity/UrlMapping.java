@@ -18,4 +18,9 @@ public class UrlMapping {
     private String longUrl;
 
     private String shortCode;
+
+    private long clicks;
+
+    //Long → object → default null
+    //long → primitive → default 0
 }

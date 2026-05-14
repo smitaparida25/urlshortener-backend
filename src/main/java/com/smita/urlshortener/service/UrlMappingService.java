@@ -35,8 +35,10 @@ public class UrlMappingService {
         return shortCode.reverse().toString();
     }
 
-    public String getOriginalUrl(String shortCode) {
+    public String getOriginalUrl(String shortCode) { //every time someone clicks the link they are calling the get original method
         UrlMapping current = urlMappingRepository.findByShortCode(shortCode);
+        current.setClicks(current.getClicks()+1);
+        urlMappingRepository.save(current); // saving is important to update anything
         return current.getLongUrl();
     }
 }
