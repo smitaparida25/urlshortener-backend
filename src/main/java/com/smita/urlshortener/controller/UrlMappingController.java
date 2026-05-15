@@ -1,6 +1,7 @@
 package com.smita.urlshortener.controller;
 
 import com.smita.urlshortener.service.UrlMappingService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +20,9 @@ public class UrlMappingController {
     }
 
     @GetMapping("/{shortCode}")
-    public ResponseEntity<Void> redirect(@PathVariable String shortCode) {
-        String url = urlMappingService.getOriginalUrl(shortCode);
+    public ResponseEntity<Void> redirect(@PathVariable String shortCode, HttpServletRequest request) {
+        String ip = request.getRemoteAddr();
+        String url = urlMappingService.getOriginalUrl(shortCode, ip);
 
         return ResponseEntity
                 .status(302)
