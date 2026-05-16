@@ -6,6 +6,8 @@ import com.smita.urlshortener.repository.UrlMappingRepository; // going to use t
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class UrlMappingService {
@@ -57,5 +59,15 @@ public class UrlMappingService {
         current.setClicks(current.getClicks()+1);
         urlMappingRepository.save(current); // saving is important to update anything
         return current.getLongUrl();
+    }
+
+    public Map<String, Long> getStats(String shortCode){
+        Map<String, Long> map = new HashMap<>();
+        long totalClicks = clickEventRepository.countByShortCode(shortCode);
+        long distinctUsers = clickEventRepository.countDistinctIpAddressByShortCode(shortCode);
+        map.put("Total clicks: ", totalClicks);
+        map.put("Unique visitors: ", distinctUsers);
+
+        return map;
     }
 }

@@ -12,4 +12,9 @@ public interface ClickEventRepository extends JpaRepository<ClickEvent, Long> {
             String ipAddress,
             LocalDateTime timestamp
     );
+
+    long countByShortCode(String shortCode);
+
+    long countDistinctIpAddressByShortCode(String shortCode);
+
 }

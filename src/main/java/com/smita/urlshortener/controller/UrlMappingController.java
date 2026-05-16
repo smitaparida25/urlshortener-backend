@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
 public class UrlMappingController {
@@ -29,5 +31,11 @@ public class UrlMappingController {
                 .header("Location", url)
                 .build();
     }
+
+    @GetMapping("/stats/{shortCode}")
+    public Map<String, Long> getStats(@PathVariable String shortCode){
+        return urlMappingService.getStats(shortCode);
+    }
+
 
 }
