@@ -64,7 +64,7 @@ public class UrlMappingService {
     public Map<String, Long> getStats(String shortCode){
         Map<String, Long> map = new HashMap<>();
         long totalClicks = clickEventRepository.countByShortCode(shortCode);
-        long distinctUsers = clickEventRepository.countDistinctIpAddressByShortCode(shortCode);
+        long distinctUsers = clickEventRepository.countUniqueVisitors(shortCode);
         map.put("Total clicks: ", totalClicks);
         map.put("Unique visitors: ", distinctUsers);
 
