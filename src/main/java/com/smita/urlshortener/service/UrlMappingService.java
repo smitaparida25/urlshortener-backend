@@ -1,4 +1,5 @@
 package com.smita.urlshortener.service;
+import com.smita.urlshortener.dto.ShortenRequest;
 import com.smita.urlshortener.entity.ClickEvent;
 import com.smita.urlshortener.entity.UrlMapping;
 import com.smita.urlshortener.repository.ClickEventRepository;
@@ -19,10 +20,14 @@ public class UrlMappingService {
     }
 
 
-    public String shortenUrl(String url){
+    public String shortenUrl(ShortenRequest shortenRequest){
+        String originalUrl = shortenRequest.getOriginalUrl();
+        int expiryDays = shortenRequest.getExpiryDays();
+        LocalDateTime expiresAt = LocalDateTime.now().plusDays(expiryDays);
         UrlMapping mapping = new UrlMapping(); // object
         // save long url first.
-        mapping.setLongUrl(url);
+        mapping.setLongUrl(originalUrl);
+        mapping.setExpiryDate(expiresAt);
         urlMappingRepository.save(mapping);
 
         Long id = mapping.getId();
@@ -46,6 +51,11 @@ public class UrlMappingService {
 
     public String getOriginalUrl(String shortCode, String ip) { //every time someone clicks the link they are calling the get original method
         UrlMapping current = urlMappingRepository.findByShortCode(shortCode);
+
+        LocalDateTime expiresAt = current.getExpiryDate();
+        if(LocalDateTime.now().isAfter(expiresAt)){
+            throw new RuntimeException("Link expired");
+        }
         LocalDateTime oneMinuteAgo = LocalDateTime.now().minusMinutes(1);
         long recentClicks = clickEventRepository.countByIpAddressAndTimestampAfter(ip, oneMinuteAgo);
         if (recentClicks >= 10) {

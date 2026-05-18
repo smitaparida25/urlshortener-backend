@@ -25,4 +25,6 @@ public class UrlMapping {
 
     //Long → object → default null
     //long → primitive → default 0
+
+    private LocalDateTime expiryDate;
 }
