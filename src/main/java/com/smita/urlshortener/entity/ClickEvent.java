@@ -21,4 +21,5 @@ public class ClickEvent {
     private String ipAddress;
 
     private LocalDateTime timestamp;
+
 }
